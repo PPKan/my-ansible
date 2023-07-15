@@ -1,0 +1,45 @@
+---
+- name: "Install Zsh"
+  apt:
+    name: zsh
+    state: present
+  become: true
+  become_method: sudo
+
+- name: "Install Git"
+  apt:
+    name: git
+    state: present
+  become: true
+  become_method: sudo
+
+- name: "Install fzf"
+  git:
+    repo: "https://github.com/junegunn/fzf.git"
+    dest: "{{ ansible_env.HOME }}/.fzf"
+    depth: 1
+
+- name: "Copying zsh Config"
+  copy:
+    src: "{{ role_path }}/files/.zshrc"
+    dest: "{{ ansible_env.HOME }}"
+
+- name: "Download zsh-syntax-highlighting from git"
+  git:
+    repo: "https://github.com/zsh-users/zsh-syntax-highlighting.git"
+    dest: "{{ ansible_env.HOME }}/.zsh/zsh-syntax-highlighting"
+
+- name: "Download zsh-auto-suggestions from git"
+  git:
+    repo: "https://github.com/zsh-users/zsh-autosuggestions"
+    dest: "{{ ansible_env.HOME }}/.zsh/zsh-autosuggestions"
+
+- name: "Run fzf script"
+  shell: "{{ ansible_env.HOME }}/.fzf/install --all --no-update-rc --key-bindings --completion --no-bash --no-fish"
+
+- name: "Add ~/.fzf.zsh to ~/.zshrc"
+  lineinfile:
+    path: "{{ ansible_env.HOME }}/.zshrc"
+    line: "source {{ ansible_env.HOME }}/.fzf.zsh"
+    state: present
+    create: yes

@@ -1,0 +1,24 @@
+---
+# tasks file for ansible-role-p10k
+
+- name: Include OS specific variables.
+  include_vars: "{{ lookup('ansible.builtin.first_found', params) }}"
+  vars:
+    params:
+      files:
+        - "{{ ansible_system }}.yml"
+        - other-os.yml
+      paths:
+        - 'vars'
+
+# - name: Include p10k prompt style variables.
+#   include_vars: "{{ p10k_style[p10k_prompt_style] }}.yml"
+
+- name: Install p10k
+  include_tasks: "p10k-install.yml"
+
+- name: Install p10k recommanded fonts
+  include_tasks: "p10k-fonts.yml"
+
+- name: Configure p10k
+  include_tasks: "p10k-configure.yml"

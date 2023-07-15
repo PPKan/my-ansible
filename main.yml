@@ -1,0 +1,8 @@
+---
+- name: "Customizing vm"
+  hosts: localhost
+  connection: local
+  roles:
+    - role: configure-tmux
+    - role: customize-terminal
+    - role: customize-zsh-theme
