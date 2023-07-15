@@ -7,10 +7,8 @@ source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
 
-# configure powerlevel10k
-
-source ~/.zsh/powerlevel10k/powerlevel10k.zsh-theme
-
-# configure zsh
+# configure fzf
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+# configure powerlevel10k

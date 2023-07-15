@@ -1,0 +1,12 @@
+---
+- name: "Install Vim"
+  apt:
+    name: vim
+    state: present
+  become: true
+  become_method: sudo
+  
+- name: "Copying vim Config"
+  copy:
+    src: "{{ role_path }}/files/.vimrc"
+    dest: "{{ ansible_env.HOME }}"
