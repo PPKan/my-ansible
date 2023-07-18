@@ -2,6 +2,8 @@
 
 > credits go to ippsec
 
+This is my personal ansible script and other scripts to initialize a new machine.
+
 ### How to
 
 ```bash
