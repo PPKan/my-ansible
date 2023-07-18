@@ -38,3 +38,6 @@ sudo usermod -a -G kali,adm,dialout,cdrom,floppy,sudo,audio,dip,video,plugdev,us
 sudo chsh <user>
 /usr/bin/zsh
 ```
+
+### internet configuration
+https://forums.kali.org/showthread.php?20846-Troubleshooting-Internet-Network-Access
