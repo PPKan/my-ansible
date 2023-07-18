@@ -27,5 +27,14 @@ sh zsh4humans.sh
 
 # restart the vm
 sudo shutdown -r -t 0
+```
 
+### Personal script -- add user
+```bash
+sudo useradd <user>
+
+sudo usermod -a -G kali,adm,dialout,cdrom,floppy,sudo,audio,dip,video,plugdev,users,netdev,bluetooth,scanner,wireshark,kaboxer <user>
+
+sudo chsh <user>
+/usr/bin/zsh
 ```
