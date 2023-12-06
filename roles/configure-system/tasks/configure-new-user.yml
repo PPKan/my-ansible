@@ -20,7 +20,7 @@
       register: new_user_created
 
     - name: Get groups for old user
-      shell: groups {{ old_user }} | cut -d: -f2 | xargs -n1 echo
+      shell: groups {{ old_user }} | cut -d ':' -f2 | xargs -n1 echo
       register: groups
       changed_when: false
 
