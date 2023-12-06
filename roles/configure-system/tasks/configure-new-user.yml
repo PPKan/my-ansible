@@ -1,46 +1,46 @@
 ---
-- name: "Migrate user from kali to walnut"
+- name: Migrate user 'kali' to 'walnut'
+  hosts: all
   become: yes
   vars:
     old_user: "kali"
     new_user: "walnut"
-    new_user_password: "walnut"
+    new_password: "$6$hZRBpGs3Ft5LIHkj$dRdKp0FGKsMi2BXZ/eo9WLXZNJ78lAcxovTDNmo1IV5u9itjl/z.zt/P6HyaM41eP374YtNp5JY40uh9b3SFW." 
+
   tasks:
-    - name: "Generate password hash for new user"
-      ansible.builtin.set_fact:
-        hashed_password: "{{ new_user_password | password_hash('sha512') }}"
-
-    - name: Get groups for old user
-      command: "groups {{ old_user }}"
-      register: old_user_groups
-      changed_when: false
-
-    - name: "Create new user (walnut)"
+    - name: Create new user with home directory and groups
       user:
         name: "{{ new_user }}"
-        password: "{{ hashed_password }}"
+        password: "{{ new_password }}"
         groups: "{{ item }}"
         append: yes
-      with_items: "{{ old_user_groups.stdout.split(':')[1].split() }}"
-      when: item != old_user
+        create_home: yes
+      with_items: "{{ groups.stdout_lines }}"
+      when: new_user not in ansible_user_ids.stdout
+      register: new_user_created
 
-    - name: "Synchronize home directory from old to new user"
-      ansible.builtin.synchronize:
-        src: "/home/{{ old_user }}/"
-        dest: "/home/{{ new_user }}/"
-        delete: yes
-        recursive: yes
+    - name: Get groups for old user
+      shell: groups {{ old_user }} | cut -d: -f2 | xargs -n1 echo
+      register: groups
+      changed_when: false
 
-    - name: "Set ownership of home directory to new user"
+    - name: Copy home directory from old to new user
+      command: cp -a /home/{{ old_user }}/ /home/{{ new_user }}/
+      when: new_user_created.changed
+
+    - name: Set ownership of the home directory to the new user
       file:
-        path: "/home/{{ new_user }}"
-        state: directory
+        path: "/home/{{ item }}"
         owner: "{{ new_user }}"
         group: "{{ new_user }}"
         recurse: yes
+      with_fileglob:
+        - "/home/{{ new_user }}/*"
+      when: new_user_created.changed
 
-    - name: "Remove old user (kali)"
+    - name: Delete old user without removing home directory
       user:
         name: "{{ old_user }}"
         state: absent
-        remove: yes
+        remove: no
+      when: new_user_created.changed
