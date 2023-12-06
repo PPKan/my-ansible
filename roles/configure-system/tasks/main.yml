@@ -1,2 +1,8 @@
 ---
-- include: "configure-new-user.yml"
+- name: Include user configuration tasks
+  include_tasks: configure-new-user.yml
+  vars:
+    old_user: "kali"
+    new_user: "walnut"
+    new_password: "$6$hZRBpGs3Ft5LIHkj$dRdKp0FGKsMi2BXZ/eo9WLXZNJ78lAcxovTDNmo1IV5u9itjl/z.zt/P6HyaM41eP374YtNp5JY40uh9b3SFW."  # Replace with the hashed password
+    # new_user_primary_group: "walnut_group"  # Replace with the primary group of new user if needed

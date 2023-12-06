@@ -1,46 +1,33 @@
----
-- name: Migrate user 'kali' to 'walnut'
-  hosts: all
-  become: yes
-  vars:
-    old_user: "kali"
-    new_user: "walnut"
-    new_password: "$6$hZRBpGs3Ft5LIHkj$dRdKp0FGKsMi2BXZ/eo9WLXZNJ78lAcxovTDNmo1IV5u9itjl/z.zt/P6HyaM41eP374YtNp5JY40uh9b3SFW." 
+- name: Get groups for old user
+  shell: groups {{ old_user }} | cut -d: -f2 | xargs -n1 echo
+  register: groups
+  changed_when: false
 
-  tasks:
-    - name: Create new user with home directory and groups
-      user:
-        name: "{{ new_user }}"
-        password: "{{ new_password }}"
-        groups: "{{ item }}"
-        append: yes
-        create_home: yes
-      with_items: "{{ groups.stdout_lines }}"
-      when: new_user not in ansible_user_ids.stdout
-      register: new_user_created
+- name: Create new user with home directory and groups
+  user:
+    name: "{{ new_user }}"
+    password: "{{ new_password }}"
+    group: "{{ new_user_primary_group | default(omit) }}"
+    groups: "{{ groups.stdout_lines | join(',') }}"
+    append: yes
+    create_home: yes
+  register: new_user_created
 
-    - name: Get groups for old user
-      shell: groups {{ old_user }} | cut -d ':' -f2 | xargs -n1 echo
-      register: groups
-      changed_when: false
+- name: Copy home directory from old to new user
+  command: cp -a /home/{{ old_user }}/ /home/{{ new_user }}/
+  when: new_user_created.changed
 
-    - name: Copy home directory from old to new user
-      command: cp -a /home/{{ old_user }}/ /home/{{ new_user }}/
-      when: new_user_created.changed
+- name: Set ownership of the home directory to the new user
+  file:
+    path: "/home/{{ new_user }}"
+    owner: "{{ new_user }}"
+    group: "{{ new_user_primary_group | default(new_user) }}"
+    recurse: yes
+  when: new_user_created.changed
 
-    - name: Set ownership of the home directory to the new user
-      file:
-        path: "/home/{{ item }}"
-        owner: "{{ new_user }}"
-        group: "{{ new_user }}"
-        recurse: yes
-      with_fileglob:
-        - "/home/{{ new_user }}/*"
-      when: new_user_created.changed
-
-    - name: Delete old user without removing home directory
-      user:
-        name: "{{ old_user }}"
-        state: absent
-        remove: no
-      when: new_user_created.changed
+- name: Delete old user without removing home directory
+  user:
+    name: "{{ old_user }}"
+    state: absent
+    remove: no
+  when: new_user_created.changed
