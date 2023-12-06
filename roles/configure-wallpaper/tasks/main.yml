@@ -1,9 +1,5 @@
 ---
 - name: Copy wallpaper to remote system
-  vars:
-    wallpaper_user: your_target_username
-    wallaper_local_path: "files/background.jpg"
-    wallpaper_remote_path: "/home/{{ wallpaper_user }}/Pictures/background.jpg"
   ansible.builtin.copy:
     src: "{{ wallpaper_local_path }}"
     dest: "{{ wallpaper_remote_path }}"
@@ -14,10 +10,6 @@
   become_user: "{{ wallpaper_user }}"
 
 - name: Set wallpaper using gsettings
-  vars:
-    wallpaper_user: your_target_username
-    wallaper_local_path: "files/background.jpg"
-    wallpaper_remote_path: "/home/{{ wallpaper_user }}/Pictures/background.jpg"
   ansible.builtin.command:
     cmd: "gsettings set org.gnome.desktop.background picture-uri 'file://{{ wallpaper_remote_path }}'"
   environment:
