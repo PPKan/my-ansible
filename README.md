@@ -8,10 +8,10 @@ This is my personal ansible script and other scripts to initialize a new machine
 
 ```bash
 # upgrade apt and distribution
-sudo apt dist-upgrade
-sudo apt update
-sudo apt upgrade
-sudo apt autoremove
+sudo apt dist-upgrade -y && \
+sudo apt update -y && \
+sudo apt upgrade -y && \
+sudo apt autoremove -y
 
 # change user (optional) (remember to change password afterward) 
 sudo useradd -m walnut && \
@@ -35,18 +35,6 @@ sh zsh4humans.sh
 
 # restart the vm
 sudo shutdown -r -t 0
-```
-
-### Personal script -- add user
-```bash
-sudo useradd -m walnut
-
-sudo usermod -a -G kali,adm,dialout,cdrom,floppy,sudo,audio,dip,video,plugdev,users,netdev,bluetooth,scanner,wireshark,kaboxer walnut
-
-sudo passwd walnut
-
-sudo chsh walnut
-/usr/bin/zsh
 ```
 
 ### internet configuration
