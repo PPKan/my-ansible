@@ -3,8 +3,8 @@
   ansible.builtin.copy:
     src: "{{ wallpaper_local_path }}"
     dest: "{{ wallpaper_remote_path }}"
-    owner: "{{ ansible_env.USER }}"
-    group: "{{ ansible_env.USER }}"
+    owner: "{{ wallpaper_user }}"
+    group: "{{ wallpaper_user }}"
     mode: '0644'
   become: yes
   become_user: "{{ wallpaper_user }}"
