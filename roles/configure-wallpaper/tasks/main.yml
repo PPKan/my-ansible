@@ -3,3 +3,5 @@
   copy:
     src: "{{ role_path }}/files/background.jpg"
     dest: "/usr/share/backgrounds/background.jpg"
+  become: true
+  become_method: sudo
