@@ -1,12 +1,12 @@
 ---
-- name: Migrate user from kali to walnut
+- name: "Migrate user from kali to walnut"
   become: yes
   vars:
     old_user: "kali"
     new_user: "walnut"
     new_user_password: "walnut"
   tasks:
-    - name: Generate password hash for new user
+    - name: "Generate password hash for new user"
       ansible.builtin.set_fact:
         hashed_password: "{{ new_user_password | password_hash('sha512') }}"
 
@@ -15,7 +15,7 @@
       register: old_user_groups
       changed_when: false
 
-    - name: Create new user (walnut)
+    - name: "Create new user (walnut)"
       user:
         name: "{{ new_user }}"
         password: "{{ hashed_password }}"
@@ -24,14 +24,14 @@
       with_items: "{{ old_user_groups.stdout.split(':')[1].split() }}"
       when: item != old_user
 
-    - name: Synchronize home directory from old to new user
+    - name: "Synchronize home directory from old to new user"
       ansible.builtin.synchronize:
         src: "/home/{{ old_user }}/"
         dest: "/home/{{ new_user }}/"
         delete: yes
         recursive: yes
 
-    - name: Set ownership of home directory to new user
+    - name: "Set ownership of home directory to new user"
       file:
         path: "/home/{{ new_user }}"
         state: directory
@@ -39,7 +39,7 @@
         group: "{{ new_user }}"
         recurse: yes
 
-    - name: Remove old user (kali)
+    - name: "Remove old user (kali)"
       user:
         name: "{{ old_user }}"
         state: absent
