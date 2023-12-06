@@ -19,6 +19,7 @@
       - ntpdate
       - exiftool
       - xclip
+      - joplin
     state: latest
   become: true
   become_method: sudo
