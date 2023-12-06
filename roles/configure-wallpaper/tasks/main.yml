@@ -1,13 +1,8 @@
 ---
 - name: Copy wallpaper to remote system
-  ansible.builtin.copy:
-    src: "{{ wallpaper_local_path }}"
+  copy:
+    src: "{{ role_path }}/files/.tmux.conf"
     dest: "{{ wallpaper_remote_path }}"
-    owner: "{{ wallpaper_user }}"
-    group: "{{ wallpaper_user }}"
-    mode: '0644'
-  become: yes
-  become_user: "{{ wallpaper_user }}"
 
 - name: Set wallpaper using gsettings
   ansible.builtin.command:
