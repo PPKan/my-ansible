@@ -18,6 +18,7 @@
       - pipx
       - ntpdate
       - exiftool
+      - xclip
     state: latest
   become: true
   become_method: sudo

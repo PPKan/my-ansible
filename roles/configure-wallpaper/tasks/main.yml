@@ -1,0 +1,27 @@
+---
+- name: Change GNOME wallpaper
+  hosts: all
+  become: yes
+  become_user: your_target_username
+  vars:
+    wallpaper_local_path: "files/background.jpg"
+    wallpaper_remote_path: "/home/{{ ansible_user }}/Pictures/background.jpg"
+
+  tasks:
+    - name: Copy wallpaper to remote system
+      ansible.builtin.copy:
+        src: "{{ wallpaper_local_path }}"
+        dest: "{{ wallpaper_remote_path }}"
+        owner: "{{ ansible_user }}"
+        group: "{{ ansible_user }}"
+        mode: '0644'
+
+    - name: Set wallpaper using gsettings
+      ansible.builtin.command:
+        cmd: "gsettings set org.gnome.desktop.background picture-uri 'file://{{ wallpaper_remote_path }}'"
+      environment:
+        DISPLAY: ":0"
+        XAUTHORITY: "/home/{{ ansible_user }}/.Xauthority"
+      become: yes
+      become_user: your_target_username
+      when: ansible_facts['distribution'] == 'Kali'

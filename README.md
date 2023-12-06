@@ -33,11 +33,13 @@ sudo shutdown -r -t 0
 
 ### Personal script -- add user
 ```bash
-sudo useradd <user>
+sudo useradd -m walnut
 
-sudo usermod -a -G kali,adm,dialout,cdrom,floppy,sudo,audio,dip,video,plugdev,users,netdev,bluetooth,scanner,wireshark,kaboxer <user>
+sudo usermod -a -G kali,adm,dialout,cdrom,floppy,sudo,audio,dip,video,plugdev,users,netdev,bluetooth,scanner,wireshark,kaboxer walnut
 
-sudo chsh <user>
+sudo passwd walnut
+
+sudo chsh walnut
 /usr/bin/zsh
 ```
 
