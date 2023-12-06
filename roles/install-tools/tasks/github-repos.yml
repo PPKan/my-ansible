@@ -1,4 +1,10 @@
 ---
+- name: Increase Git HTTP post buffer size
+  ansible.builtin.shell: git config --global http.postBuffer 52428800
+
+- name: Disable Git compression
+  ansible.builtin.shell: git config --global core.compression 0
+
 - name: "Installing useful github repos"
   git:
     repo: "{{ item.repo }}"
