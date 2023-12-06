@@ -7,4 +7,5 @@
     - role: configure-tmux
     - role: customize-vim
     - role: customize-terminal
+    - role: configure-system
     - role: gantsign.visual-studio-code

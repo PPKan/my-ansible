@@ -1,0 +1,2 @@
+---
+- include: "configure-new-user.yml"
