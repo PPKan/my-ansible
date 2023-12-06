@@ -3,23 +3,17 @@
     "Certificates": {
       "Install": ["/usr/local/share/ca-certificates/BurpSuiteCA.der"]
     },
-    "DisableAppUpdate": true,
     "DisplayBookmarksToolbar": true,
     "NoDefaultBookmarks": true,
     "OverrideFirstRunPage": "",
     "OverridePostUpdatePage": "",
     "Homepage": {
-      "URL": "https://start.parrotsec.org",
+      "URL": "file:///usr/share/kali-defaults/web/homepage.html",
       "Locked": false,
       "StartPage": "homepage"
     },
-    "SearchEngines": {
-      "Default": "DuckDuckGo",
-      "PreventInstalls": true
-    },
-    "SearchSuggestEnabled": false,
     "DisableTelemetry": true,
-    "CaptivePortal": false,
+    "NetworkPrediction": false,
     "Cookies": {
       "Default": true,
       "AcceptThirdParty": "never",
@@ -44,6 +38,7 @@
       "Cryptomining": true,
       "Fingerprinting": true
     },
+    "CaptivePortal": false,
     "Extensions": {
       "Install": [
 {% for item in FirefoxPlugins %}
@@ -61,17 +56,6 @@
     },
     "HardwareAcceleration": true,
     "NetworkPrediction": false,
-    "PopupBlocking": {
-      "Allow": ["https://crypt.parrot.sh",
-                "https://pad.parrot.sh"],
-      "Default": false,
-      "Locked": false
-    },
-    "PromptForDownloadLocation": true,
-    "SupportMenu": {
-      "Title": "Parrot Support",
-      "URL": "https://community.parrotsec.org",
-      "AccessKey": "S"
-    }
+    "PromptForDownloadLocation": true
   }
 }
