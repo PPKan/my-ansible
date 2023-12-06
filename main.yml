@@ -9,7 +9,3 @@
     - role: customize-terminal
     - role: gantsign.visual-studio-code
     - role: configure-wallpaper
-      vars:
-        wallpaper_user: your_target_username
-        wallaper_local_path: "files/background.jpg"
-        wallpaper_remote_path: "/home/{{ wallpaper_user }}/Pictures/background.jpg"
