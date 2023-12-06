@@ -1,7 +1,7 @@
 ---
 - name: Copy wallpaper to remote system
   copy:
-    src: "{{ role_path }}/files/.tmux.conf"
+    src: "{{ role_path }}/files/background.jpg"
     dest: "{{ wallpaper_remote_path }}"
 
 - name: Set wallpaper using gsettings
