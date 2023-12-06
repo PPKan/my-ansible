@@ -12,6 +12,7 @@
 - name: "Installing Packages"
   package:
     name:
+      - seclists
       - jq
       - pipx
       - ntpdate
