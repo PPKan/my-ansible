@@ -2,14 +2,4 @@
 - name: Copy wallpaper to remote system
   copy:
     src: "{{ role_path }}/files/background.jpg"
-    dest: "{{ wallpaper_remote_path }}"
-
-- name: Set wallpaper using gsettings
-  ansible.builtin.command:
-    cmd: "gsettings set org.gnome.desktop.background picture-uri 'file://{{ wallpaper_remote_path }}'"
-  environment:
-    DISPLAY: ":0"
-    XAUTHORITY: "/home/{{ wallpaper_user }}/.Xauthority"
-  become: yes
-  become_user: "{{ wallpaper_user }}"
-  when: ansible_facts['distribution'] == 'Kali'
+    dest: "/usr/share/backgrounds/background.jpg"
