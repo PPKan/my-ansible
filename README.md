@@ -13,16 +13,22 @@ sudo apt update
 sudo apt upgrade
 sudo apt autoremove
 
+# change user (optional) (remember to change password afterward) 
+sudo useradd -m walnut && \
+sudo usermod -a -G kali,adm,dialout,cdrom,floppy,sudo,audio,dip,video,plugdev,users,netdev,bluetooth,scanner,wireshark,kaboxer walnut && \
+echo "walnut:walnut" | sudo chpasswd && \
+echo /usr/bin/zsh | sudo chsh walnut
+
+# restart and login with new user
+
 # install ansible and git
-sudo apt install ansible git -y
-
-# git clone ansible
-git clone https://github.com/PPKan/my-ansible
-cd my-ansible
-
-# run main playbook
-sudo whoami #make sure sudo token enabled
-ansible-playbook main.yml
+cd /dev/shm && \
+sudo apt install ansible git -y && \
+git clone https://github.com/PPKan/my-ansible && \
+cd my-ansible && \
+ansible-galaxy install -r requirements.yml && \
+echo "kali" | sudo whoami && \
+ansible-playbook main.yml 
 
 # install [z4h](https://github.com/romkatv/zsh4humans)
 sh zsh4humans.sh
