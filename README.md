@@ -27,7 +27,7 @@ sudo apt install ansible git -y && \
 git clone https://github.com/PPKan/my-ansible && \
 cd my-ansible && \
 ansible-galaxy install -r requirements.yml && \
-echo "kali" | sudo whoami && \
+echo "walnut" | sudo whoami && \
 ansible-playbook main.yml 
 
 # install [z4h](https://github.com/romkatv/zsh4humans)
