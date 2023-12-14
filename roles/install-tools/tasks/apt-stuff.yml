@@ -20,6 +20,8 @@
       - exiftool
       - xclip
       - joplin
+      - neo4j
+      - bloodhound
     state: latest
   become: true
   become_method: sudo
