@@ -22,6 +22,7 @@
       - joplin
       - neo4j
       - bloodhound
+      - gobuster
     state: latest
   become: true
   become_method: sudo

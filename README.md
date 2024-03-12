@@ -35,6 +35,9 @@ sh zsh4humans.sh
 
 # restart the vm
 sudo shutdown -r -t 0
+
+# change the password
+echo "walnut:<YOURNEWPASSWORD>" | sudo chpasswd
 ```
 
 ### internet configuration
