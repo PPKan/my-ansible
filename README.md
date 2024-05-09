@@ -37,7 +37,8 @@ sh zsh4humans.sh
 sudo shutdown -r -t 0
 
 # change the password
-echo "walnut:<YOURNEWPASSWORD>" | sudo chpasswd
+sudo passwd walnut
+
 ```
 
 ### internet configuration
